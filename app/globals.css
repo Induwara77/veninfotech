@@ -1,26 +1,20 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
+  --color-surface: #ececec; /* light page body */
+  --color-card: #ffffff;
+  --color-night: #0f0f10; /* top bar, blog band, footer */
+  --color-night-2: #1b1b1e;
+  --color-brand: #1b8ee6; /* links, buttons, active tabs */
+  --color-violet: #8e44ad; /* "Top reviewers" header */
+  --color-gold: #f5c518; /* featured widget header */
+  --color-flame: #f58220; /* category badge */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: #222;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
