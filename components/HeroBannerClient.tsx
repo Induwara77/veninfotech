@@ -101,7 +101,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
             <div key={`${activeItem.id}-${progressKey}`} className="animate-hero-fade">
               {/* Badge & Meta Information */}
               <div className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#1365A4] px-3 py-1 text-[11px] font-black uppercase tracking-wider text-white shadow-md shadow-[#1365A4]/35">
+                <span className="inline-flex items-center gap-1.5 bg-[#1365A4] px-3 py-1 text-[11px] font-black uppercase tracking-wider text-white shadow-md shadow-[#1365A4]/35">
                   <span className="relative flex size-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                     <span className="relative inline-flex size-2 rounded-full bg-white" />
@@ -109,7 +109,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
                   {activeItem.badge}
                 </span>
 
-                <span className="rounded bg-white/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-neutral-300 backdrop-blur-sm">
+                <span className="bg-white/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-neutral-300 backdrop-blur-sm">
                   {activeItem.category}
                 </span>
 
@@ -124,7 +124,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
               <h1 className="mt-4 text-2xl font-black leading-[1.14] tracking-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.9)] sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl">
                 <Link
                   href={activeItem.href}
-                  className="transition-colors hover:text-[#70baff] focus:outline-none focus:underline"
+                  className=""
                 >
                   {activeItem.title}
                 </Link>
@@ -139,7 +139,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
               <div className="mt-6 flex flex-wrap items-center gap-4 sm:mt-8">
                 <Link
                   href={activeItem.href}
-                  className="group inline-flex items-center gap-2 rounded-md bg-[#1365A4] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-[#0e4c7c] active:scale-95"
+                  className="group inline-flex items-center gap-2 bg-[#1365A4] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-[#0e4c7c] active:scale-95"
                 >
                   <span>Read Full Article</span>
                   <svg
@@ -159,7 +159,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
 
                 <Link
                   href="#latest-games"
-                  className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/40 px-4 py-3 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-black/60"
+                  className="inline-flex items-center gap-2 bg-white px-4 py-3 text-xs font-bold uppercase tracking-wider text-black"
                 >
                   Explore Feed
                 </Link>
@@ -171,7 +171,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
           <div className="lg:col-span-5 xl:col-span-5">
             <aside
               aria-label="Trending Stories"
-              className="relative overflow-hidden border border-white/10 bg-neutral-950/65 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl ring-1 ring-white/10 sm:p-5 lg:translate-y-2"
+              className="relative overflow-hidden border border-white/10 bg-neutral-950/30 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl ring-1 ring-white/10 sm:p-5 lg:translate-y-2"
             >
               {/* Header with Title and Counter */}
               <div className="mb-3.5 flex items-center justify-between border-b border-white/10 pb-3">
@@ -181,7 +181,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
                     <span className="relative inline-flex size-2 rounded-full bg-[#1365A4]" />
                   </span>
                   <h2 className="text-xs font-bold uppercase tracking-wider text-white">
-                    Trending Now
+                    Latest News
                   </h2>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroBanner from '@/components/HeroBanner';
+import BreakingPopularSection from '@/components/BreakingPopularSection';
 import SponsorBar from '@/components/SponsorBar';
 import LatestGamesGrid from '@/components/LatestGamesGrid';
 import NewsList from '@/components/NewsList';
@@ -56,33 +57,8 @@ export default function HomePage(props: PageProps<'/'>) {
           <HeroBanner />
         </Suspense>
 
-        {/* Content column area for subsequent sections */}
-        <div id="latest-games" className="mx-auto w-full max-w-[1170px] space-y-8 px-4 py-8 sm:py-10">
-          <Suspense fallback={<Skeleton className="h-64" />}>
-            <GamesLoader />
-          </Suspense>
-
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <Suspense fallback={<Skeleton className="h-[520px]" />}>
-              {/* searchParams is request-time data, so it's passed down un-awaited */}
-              <NewsList searchParams={props.searchParams} />
-            </Suspense>
-
-            <aside className="space-y-6">
-              <Suspense fallback={<Skeleton className="h-72" />}>
-                <TopRatedLoader />
-              </Suspense>
-              <Suspense fallback={<Skeleton className="h-32" />}>
-                <FeaturedLoader />
-              </Suspense>
-            </aside>
-          </div>
-
-          {/* Sponsors Section (moved away from hero area) */}
-          <Suspense fallback={<Skeleton className="h-16" />}>
-            <SponsorsLoader />
-          </Suspense>
-        </div>
+        {/* Breaking News & Popular Now Section */}
+        <BreakingPopularSection />
 
         {/* Dark blog + forum band */}
         <section className="bg-night text-white">
