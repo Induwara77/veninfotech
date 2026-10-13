@@ -1,20 +1,45 @@
 @import "tailwindcss";
 
 @theme {
-  --color-surface: #ececec; /* light page body */
+  --color-surface: #f4f5f7; /* clean light surface */
   --color-card: #ffffff;
-  --color-night: #0f0f10; /* top bar, blog band, footer */
-  --color-night-2: #1b1b1e;
-  --color-brand: #1b8ee6; /* links, buttons, active tabs */
-  --color-violet: #8e44ad; /* "Top reviewers" header */
-  --color-gold: #f5c518; /* featured widget header */
-  --color-flame: #f58220; /* category badge */
+  --color-night: #0a0a0c; /* rich black */
+  --color-night-2: #121215;
+  --color-brand: #1365A4; /* links, buttons, active highlights */
+  --color-violet: #1365A4; /* unified theme accent */
+  --color-gold: #1365A4; /* unified theme accent */
+  --color-flame: #1365A4; /* unified theme accent */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--color-surface);
-  color: #222;
+  color: #111111;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+@keyframes heroProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-fade {
+  animation: heroFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

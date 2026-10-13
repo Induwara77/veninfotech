@@ -1,57 +1,82 @@
-import Link from 'next/link';
-import Cover from '@/components/ui/Cover';
-import { getLatestPosts, type Post } from '@/lib/posts';
+import { getLatestPosts } from '@/lib/posts';
+import HeroBannerClient, { HeroItem } from './HeroBannerClient';
 
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="absolute right-0 top-0 z-10 bg-flame px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-      {children}
-    </span>
-  );
-}
-
-function SideCard({ post }: { post: Post }) {
-  return (
-    <Link href={`/posts/${post.slug}`} className="group relative block overflow-hidden bg-night">
-      <Cover src={post.image} seed={post.slug} sizes="(min-width: 1024px) 380px, 100vw" className="transition-transform duration-500 group-hover:scale-105" />
-      <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-transparent" />
-      <Badge>{post.category ?? 'News'}</Badge>
-      <h3 className="absolute inset-x-0 bottom-0 line-clamp-2 p-3 text-xs font-bold uppercase leading-snug text-white">
-        {post.title}
-      </h3>
-    </Link>
-  );
-}
+const DEFAULT_HERO_ITEMS: HeroItem[] = [
+  {
+    id: 'hero-1',
+    badge: 'HOT NOW',
+    category: 'WORLD NEWS',
+    date: 'NOV 17, 2023',
+    title: 'Bulvinar Neque Laoreet Suspendisse Interdum',
+    excerpt:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcuid ac.',
+    image: '/images/hero/hero-bg.jpg',
+    href: '#',
+  },
+  {
+    id: 'hero-2',
+    badge: 'HOT NOW',
+    category: 'CRYPTO',
+    date: '2 HOURS AGO',
+    title: 'Scelerisque Varius Morbi Enim Nunc Faucibus',
+    excerpt:
+      'Decentralized finance protocols reach new milestones as institutional capital surges into digital assets across global markets.',
+    image: '/images/hero/trending-bitcoin.jpg',
+    href: '#',
+  },
+  {
+    id: 'hero-3',
+    badge: 'HOT NOW',
+    category: 'NATURE',
+    date: '4 HOURS AGO',
+    title: 'Bulvinar Neque Laoreet Suspendisse Interdum',
+    excerpt:
+      'Deep ocean expeditions uncover rare marine ecosystems and uncharted geothermal wonders previously unseen.',
+    image: '/images/hero/trending-ocean.jpg',
+    href: '#',
+  },
+  {
+    id: 'hero-4',
+    badge: 'HOT NOW',
+    category: 'TRAVEL',
+    date: '6 HOURS AGO',
+    title: 'Accumsan Tortor Posuere Acut Consequat Semper',
+    excerpt:
+      'High-altitude trails and pristine wilderness paths draw explorers seeking remote backcountry adventures across alpine passes.',
+    image: '/images/hero/trending-hikers.jpg',
+    href: '#',
+  },
+  {
+    id: 'hero-5',
+    badge: 'HOT NOW',
+    category: 'TECH',
+    date: '8 HOURS AGO',
+    title: 'Augue Neque Gravida Fermentum Sollicitudin',
+    excerpt:
+      'Smart cities integrate autonomous transit networks and quantum sensor arrays to transform urban living and mobility.',
+    image: '/images/hero/breaking-city.jpg',
+    href: '#',
+  },
+];
 
 export default async function HeroBanner() {
-  const [main, ...rest] = await getLatestPosts(4);
-  if (!main) return null;
-  const side = rest.slice(0, 3);
+  const posts = await getLatestPosts(5);
 
-  return (
-    <section aria-label="Featured stories" className="grid gap-2 lg:h-[380px] lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-      <Link
-        href={`/posts/${main.slug}`}
-        className={`group relative block min-h-72 overflow-hidden bg-night ${side.length === 0 ? 'lg:col-span-2' : ''}`}
-      >
-        <Cover src={main.image} seed={main.slug} sizes="(min-width: 1024px) 760px, 100vw" className="transition-transform duration-700 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
-        <Badge>{main.category ?? 'Featured'}</Badge>
-        <div className="absolute inset-x-0 bottom-0 p-5">
-          <h1 className="text-xl font-extrabold uppercase leading-tight text-white md:text-2xl">
-            {main.title}
-          </h1>
-          <p className="mt-1 line-clamp-2 max-w-2xl text-xs text-neutral-300">{main.excerpt}</p>
-        </div>
-      </Link>
+  const items: HeroItem[] = DEFAULT_HERO_ITEMS.map((item, index) => {
+    const post = posts[index];
+    if (!post) return item;
 
-      {side.length > 0 && (
-        <div className="grid min-h-72 grid-rows-3 gap-2">
-          {side.map((post) => (
-            <SideCard key={post.slug} post={post} />
-          ))}
-        </div>
-      )}
-    </section>
-  );
+    return {
+      id: post.slug || item.id,
+      badge: 'HOT NOW',
+      category: post.category?.toUpperCase() || item.category,
+      date: post.date || item.date,
+      title: post.title || item.title,
+      excerpt: post.excerpt || item.excerpt,
+      image: post.image || item.image,
+      href: `/posts/${post.slug}`,
+    };
+  });
+
+  return <HeroBannerClient items={items} />;
 }

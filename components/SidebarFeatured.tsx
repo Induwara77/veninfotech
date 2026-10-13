@@ -13,7 +13,7 @@ export default function SidebarFeatured({
     <section aria-labelledby="featured-heading" className="shadow-sm">
       <h2
         id="featured-heading"
-        className="bg-gold px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-night"
+        className="bg-gold px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-white"
       >
         {title}
       </h2>

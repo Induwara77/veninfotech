@@ -47,15 +47,17 @@ export default function HomePage(props: PageProps<'/'>) {
       <Navbar />
 
       <main>
-        <div className="mx-auto w-full max-w-[1170px] space-y-8 px-4 py-6">
-          <Suspense fallback={<Skeleton className="h-[380px]" />}>
-            <HeroBanner />
-          </Suspense>
+        {/* Full-width Hero Section with background spanning entire screen */}
+        <Suspense
+          fallback={
+            <div className="h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] w-full bg-neutral-950 animate-pulse" />
+          }
+        >
+          <HeroBanner />
+        </Suspense>
 
-          <Suspense fallback={<Skeleton className="h-16" />}>
-            <SponsorsLoader />
-          </Suspense>
-
+        {/* Content column area for subsequent sections */}
+        <div id="latest-games" className="mx-auto w-full max-w-[1170px] space-y-8 px-4 py-8 sm:py-10">
           <Suspense fallback={<Skeleton className="h-64" />}>
             <GamesLoader />
           </Suspense>
@@ -75,6 +77,11 @@ export default function HomePage(props: PageProps<'/'>) {
               </Suspense>
             </aside>
           </div>
+
+          {/* Sponsors Section (moved away from hero area) */}
+          <Suspense fallback={<Skeleton className="h-16" />}>
+            <SponsorsLoader />
+          </Suspense>
         </div>
 
         {/* Dark blog + forum band */}
