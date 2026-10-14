@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroBanner from '@/components/HeroBanner';
 import BreakingPopularSection from '@/components/BreakingPopularSection';
+import ProductCommunitySection from '@/components/ProductCommunitySection';
 import SponsorBar from '@/components/SponsorBar';
 import LatestGamesGrid from '@/components/LatestGamesGrid';
 import NewsList from '@/components/NewsList';
@@ -59,6 +60,9 @@ export default function HomePage(props: PageProps<'/'>) {
 
         {/* Breaking News & Popular Now Section */}
         <BreakingPopularSection />
+
+        {/* Product Reviews & Community Q&A Section */}
+        <ProductCommunitySection />
 
         {/* Dark blog + forum band */}
         <section className="bg-night text-white">

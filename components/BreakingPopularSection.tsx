@@ -93,7 +93,7 @@ export default function BreakingPopularSection({
 
             <Link
               href={breaking.href}
-              className="group relative flex flex-1 flex-col justify-end overflow-hidden rounded-md bg-neutral-950 shadow-sm transition-all duration-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1365A4] min-h-[460px] sm:min-h-[520px] lg:min-h-0"
+              className="group relative flex flex-1 flex-col justify-end overflow-hidden rounded-none bg-neutral-950 shadow-sm transition-all duration-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1365A4] min-h-[460px] sm:min-h-[520px] lg:min-h-0"
             >
               {/* Image with smooth zoom on hover */}
               <div className="absolute inset-0 overflow-hidden">
@@ -113,7 +113,7 @@ export default function BreakingPopularSection({
 
               {/* Top-Left BREAKING Pill Badge */}
               <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
-                <span className="inline-block rounded-[2px] bg-[#f97316] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
+                <span className="inline-block rounded-none bg-[#f97316] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
                   {breaking.badge}
                 </span>
               </div>
@@ -121,7 +121,7 @@ export default function BreakingPopularSection({
               {/* Bottom Details Content */}
               <div className="relative z-10 flex flex-col items-start p-5 sm:p-6 md:p-7">
                 {/* Category Badge */}
-                <span className="mb-2.5 inline-block rounded-[2px] bg-black/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
+                <span className="mb-2.5 inline-block rounded-none bg-black/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
                   {breaking.category}
                 </span>
 
@@ -152,10 +152,10 @@ export default function BreakingPopularSection({
                 <article key={item.id} className="group flex flex-col">
                   <Link
                     href={item.href}
-                    className="flex flex-col h-full rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1365A4]"
+                    className="flex flex-col h-full rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1365A4]"
                   >
                     {/* Thumbnail with Category Badges */}
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-neutral-100 shadow-sm">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-none bg-neutral-100 shadow-sm">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -169,7 +169,7 @@ export default function BreakingPopularSection({
                         {item.categories.map((cat) => (
                           <span
                             key={cat}
-                            className="inline-block rounded-[2px] bg-black/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-[2px]"
+                            className="inline-block rounded-none bg-black/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-[2px]"
                           >
                             {cat}
                           </span>
