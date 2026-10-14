@@ -63,18 +63,6 @@ export default function HomePage(props: PageProps<'/'>) {
 
         {/* Product Reviews & Community Q&A Section */}
         <ProductCommunitySection />
-
-        {/* Dark blog + forum band */}
-        <section className="bg-night text-white">
-          <div className="mx-auto grid w-full max-w-[1170px] gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_380px]">
-            <Suspense fallback={<Skeleton className="h-96 bg-white/10" />}>
-              <BlogSection />
-            </Suspense>
-            <Suspense fallback={<Skeleton className="h-96 bg-white/10" />}>
-              <ForumLoader />
-            </Suspense>
-          </div>
-        </section>
       </main>
 
       <Footer />

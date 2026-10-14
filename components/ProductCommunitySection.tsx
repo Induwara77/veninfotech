@@ -34,7 +34,7 @@ const PRODUCTS_DATA: ProductCommunityItem[] = [
     ratingScore: 5,
     totalReviews: '1,248 reviews',
     image: '/images/products/headphones.jpg',
-    headline: 'Industry-Leading Active Noise Cancellation with Precision Acoustics',
+    headline: 'Industry-Leading Active Noise Cancellation & Balanced Acoustics',
     reviewQuote:
       'The noise isolation in open spaces is phenomenal. Soundstage is clear and balanced, and the battery easily lasts an entire week of continuous work.',
     reviewerName: 'David Chen',
@@ -140,7 +140,7 @@ const PRODUCTS_DATA: ProductCommunityItem[] = [
   },
 ];
 
-const AUTOPLAY_INTERVAL = 6000; // 6 seconds auto swipe
+const AUTOPLAY_INTERVAL = 5500; // 5.5s auto swipe interval
 
 export default function ProductCommunitySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -153,14 +153,7 @@ export default function ProductCommunitySection() {
     setCurrentIndex((prev) => (prev + 1) % total);
   }, [total]);
 
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  const goToSlide = (idx: number) => {
-    setCurrentIndex(idx);
-  };
-
+  // Clean auto-swipe horizontally across products
   useEffect(() => {
     if (isPaused) return;
 
@@ -181,55 +174,22 @@ export default function ProductCommunitySection() {
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="mx-auto w-full max-w-[1170px] px-4 sm:px-6">
-        {/* Section Header with Navigation Controls */}
-        <div className="mb-8 flex flex-col justify-between gap-4 border-b border-neutral-200 pb-5 sm:flex-row sm:items-end">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="inline-block bg-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white rounded-none">
-                COMMUNITY HUB
-              </span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-                Verified Reviews &amp; Direct Q&amp;A
-              </span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">
-              Product Reviews &amp; Community Q&amp;A
-            </h2>
-          </div>
-
-          {/* Navigation Controls: Prev / Next buttons + Slide counter (Sharp corners) */}
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono font-medium text-neutral-500 tracking-wider">
-              {String(currentIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+        {/* Section Header - Clean, Focused, Light Theme */}
+        <div className="mb-6 border-b border-neutral-200 pb-4">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-block bg-black px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white rounded-none">
+              COMMUNITY HUB
             </span>
-
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={prevSlide}
-                aria-label="Previous product review"
-                className="flex size-9 items-center justify-center border border-neutral-300 bg-white text-neutral-800 transition-colors hover:border-black hover:bg-black hover:text-white rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black"
-              >
-                <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next product review"
-                className="flex size-9 items-center justify-center border border-neutral-300 bg-white text-neutral-800 transition-colors hover:border-black hover:bg-black hover:text-white rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black"
-              >
-                <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-            </div>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+              Verified Reviews &amp; Direct Q&amp;A
+            </span>
           </div>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">
+            Product Reviews &amp; Community Q&amp;A
+          </h2>
         </div>
 
-        {/* Carousel Slider Window (Horizontally swipes products and their matching Q&A together) */}
+        {/* Carousel Window: Auto-swipes products and community Q&A smoothly */}
         <div className="relative overflow-hidden bg-white border border-neutral-200 rounded-none shadow-sm">
           <div
             className="flex transition-transform duration-700 ease-in-out"
@@ -372,23 +332,6 @@ export default function ProductCommunitySection() {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Bottom Sharp Pagination Tabs */}
-          <div className="flex items-center justify-center gap-1.5 border-t border-neutral-200 bg-[#fafafa] px-4 py-3">
-            {PRODUCTS_DATA.map((product, idx) => (
-              <button
-                key={product.id}
-                type="button"
-                onClick={() => goToSlide(idx)}
-                aria-label={`Jump to review for ${product.title}`}
-                className={`h-1.5 transition-all duration-300 rounded-none ${
-                  idx === currentIndex
-                    ? 'w-10 bg-neutral-900'
-                    : 'w-4 bg-neutral-300 hover:bg-neutral-400'
-                }`}
-              />
             ))}
           </div>
         </div>
