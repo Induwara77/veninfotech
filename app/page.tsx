@@ -21,6 +21,7 @@ import {
 } from '@/lib/cms';
 
 import { redirect } from 'next/navigation';
+import { getAllPosts } from '@/lib/posts';
 
 export const instant = false; // Allows dynamic database queries on the homepage
 
@@ -54,6 +55,31 @@ export default async function HomePage(props: HomePageProps) {
   if (searchParams?.category) {
     redirect(`/category/${encodeURIComponent(searchParams.category.toLowerCase())}`);
   }
+
+  const allPosts = await getAllPosts('published');
+  const extraPosts = allPosts.slice(5);
+
+  const breakingPost = extraPosts[0]
+    ? {
+        id: String(extraPosts[0].id ?? extraPosts[0].slug),
+        badge: 'ARCHIVE',
+        category: (extraPosts[0].category || 'NEWS').toUpperCase(),
+        title: extraPosts[0].title,
+        date: extraPosts[0].date,
+        image: extraPosts[0].image || '/images/hero/hero-bg.jpg',
+        href: `/posts/${extraPosts[0].slug}`,
+      }
+    : undefined;
+
+  const popularPosts = extraPosts.slice(1, 5).map((p) => ({
+    id: String(p.id ?? p.slug),
+    categories: [(p.category || 'NEWS').toUpperCase()],
+    title: p.title,
+    excerpt: p.excerpt,
+    image: p.image || '/images/hero/hero-bg.jpg',
+    href: `/posts/${p.slug}`,
+  }));
+
   return (
     <>
       <Navbar />
@@ -68,8 +94,10 @@ export default async function HomePage(props: HomePageProps) {
           <HeroBanner />
         </Suspense>
 
-        {/* Breaking News & Popular Now Section */}
-        <BreakingPopularSection />
+        {/* More Stories & Archive Feed (Only renders if real published posts exist beyond the 5 Hero stories) */}
+        {breakingPost && (
+          <BreakingPopularSection breaking={breakingPost} popular={popularPosts} />
+        )}
 
         {/* Product Reviews & Community Q&A Section */}
         <ProductCommunitySection />

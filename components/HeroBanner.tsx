@@ -1,71 +1,15 @@
 import { getLatestPosts } from '@/lib/posts';
 import HeroBannerClient, { HeroItem } from './HeroBannerClient';
-
-const DEFAULT_HERO_ITEMS: HeroItem[] = [
-  {
-    id: 'hero-1',
-    badge: 'HOT NOW',
-    category: 'WORLD NEWS',
-    date: 'NOV 17, 2023',
-    title: 'Bulvinar Neque Laoreet Suspendisse Interdum',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcuid ac.',
-    image: '/images/hero/hero-bg.jpg',
-    href: '#',
-  },
-  {
-    id: 'hero-2',
-    badge: 'HOT NOW',
-    category: 'CRYPTO',
-    date: '2 HOURS AGO',
-    title: 'Scelerisque Varius Morbi Enim Nunc Faucibus',
-    excerpt:
-      'Decentralized finance protocols reach new milestones as institutional capital surges into digital assets across global markets.',
-    image: '/images/hero/trending-bitcoin.jpg',
-    href: '#',
-  },
-  {
-    id: 'hero-3',
-    badge: 'HOT NOW',
-    category: 'NATURE',
-    date: '4 HOURS AGO',
-    title: 'Bulvinar Neque Laoreet Suspendisse Interdum',
-    excerpt:
-      'Deep ocean expeditions uncover rare marine ecosystems and uncharted geothermal wonders previously unseen.',
-    image: '/images/hero/trending-ocean.jpg',
-    href: '#',
-  },
-  {
-    id: 'hero-4',
-    badge: 'HOT NOW',
-    category: 'TRAVEL',
-    date: '6 HOURS AGO',
-    title: 'Accumsan Tortor Posuere Acut Consequat Semper',
-    excerpt:
-      'High-altitude trails and pristine wilderness paths draw explorers seeking remote backcountry adventures across alpine passes.',
-    image: '/images/hero/trending-hikers.jpg',
-    href: '#',
-  },
-  {
-    id: 'hero-5',
-    badge: 'HOT NOW',
-    category: 'TECH',
-    date: '8 HOURS AGO',
-    title: 'Augue Neque Gravida Fermentum Sollicitudin',
-    excerpt:
-      'Smart cities integrate autonomous transit networks and quantum sensor arrays to transform urban living and mobility.',
-    image: '/images/hero/breaking-city.jpg',
-    href: '#',
-  },
-];
+import Link from 'next/link';
 
 export default async function HeroBanner() {
   const posts = await getLatestPosts(5);
 
+  // If real published blogs exist, display strictly the dynamic uploaded blogs (up to 5 recent)
   if (posts && posts.length > 0) {
-    const items: HeroItem[] = posts.map((post, index) => ({
+    const items: HeroItem[] = posts.slice(0, 5).map((post, index) => ({
       id: String(post.id ?? post.slug ?? `post-${index}`),
-      badge: 'LATEST BLOG',
+      badge: index === 0 ? 'LATEST STORY' : 'FEATURED',
       category: (post.category || 'BLOG').toUpperCase(),
       date: post.date,
       title: post.title,
@@ -74,15 +18,46 @@ export default async function HeroBanner() {
       href: `/posts/${post.slug}`,
     }));
 
-    // If there are fewer than 5 posts, pad with default items so carousel has full depth
-    if (items.length < 5) {
-      const remaining = DEFAULT_HERO_ITEMS.slice(items.length);
-      return <HeroBannerClient items={[...items, ...remaining]} />;
-    }
-
     return <HeroBannerClient items={items} />;
   }
 
-  // Graceful fallback to curated showcase
-  return <HeroBannerClient items={DEFAULT_HERO_ITEMS} />;
+  // Clean Welcome Hero when 0 blogs are uploaded yet (no fake blogs, no admin links)
+  return (
+    <section
+      aria-label="Welcome Hero"
+      className="relative flex min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] w-full flex-col justify-center overflow-hidden bg-neutral-950 text-white shadow-2xl"
+    >
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/40 via-neutral-950/90 to-neutral-950" />
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-[1170px] flex-col justify-center px-4 py-16 sm:px-6">
+        <div className="max-w-2xl animate-hero-fade">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-[#70baff] backdrop-blur-md">
+            <span className="size-2 rounded-full bg-[#1365A4] animate-pulse" />
+            <span>VIT EDITORIAL DESK</span>
+          </div>
+
+          <h1 className="mt-5 text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+            Independent News &amp; Technology Publication
+          </h1>
+
+          <p className="mt-4 text-base text-neutral-300 leading-relaxed">
+            Welcome to the live platform. Verified stories, analysis, and breaking articles will appear here automatically as our editorial team publishes them.
+          </p>
+
+          <div className="mt-8 flex items-center gap-4">
+            <Link
+              href="#latest-games"
+              className="inline-flex items-center gap-2 bg-[#1365A4] hover:bg-[#0e4c7c] text-white text-xs font-bold uppercase tracking-wider px-6 py-3.5 transition-all shadow-lg shadow-[#1365A4]/30"
+            >
+              <span>Explore Portal Feeds</span>
+              <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

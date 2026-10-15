@@ -25,59 +25,13 @@ export interface BreakingPopularSectionProps {
   popular?: PopularArticle[];
 }
 
-const DEFAULT_BREAKING: BreakingArticle = {
-  id: 'breaking-politics-1',
-  badge: 'BREAKING',
-  category: 'POLITICS',
-  title: 'Convallis Posuere Morbi Leo Orna Molestie',
-  date: 'NOV 15, 2023',
-  image: '/images/news/breaking-protest.jpg',
-  href: '#',
-};
-
-const DEFAULT_POPULAR: PopularArticle[] = [
-  {
-    id: 'popular-1',
-    categories: ['TRAVEL', 'WORLD'],
-    title: 'Pellentesque Eliteget Bravida Cumsociis Natoque',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-    image: '/images/news/lake-travel.jpg',
-    href: '#',
-  },
-  {
-    id: 'popular-2',
-    categories: ['SCIENCE'],
-    title: 'Turpis Egestas Sed Tempus Urna Pharetra',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-    image: '/images/news/satellite-science.jpg',
-    href: '#',
-  },
-  {
-    id: 'popular-3',
-    categories: ['ECONOMY'],
-    title: 'Minulla Posuere Sollicitudin Aliquam Ultrices Sagittis',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-    image: '/images/news/port-economy.jpg',
-    href: '#',
-  },
-  {
-    id: 'popular-4',
-    categories: ['ECONOMY'],
-    title: 'Scelerisque Varius Morbi Enim Nunc Faucibus',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-    image: '/images/news/bitcoin-economy.jpg',
-    href: '#',
-  },
-];
-
 export default function BreakingPopularSection({
-  breaking = DEFAULT_BREAKING,
-  popular = DEFAULT_POPULAR,
+  breaking,
+  popular,
 }: BreakingPopularSectionProps) {
+  if (!breaking && (!popular || popular.length === 0)) {
+    return null;
+  }
   return (
     <section
       aria-label="Breaking News and Popular Stories"

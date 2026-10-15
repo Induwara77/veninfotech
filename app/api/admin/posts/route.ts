@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { revalidatePath } from 'next/cache';
 import { sql } from '@/lib/db';
+import { ADMIN_COOKIE_NAME, verifySessionToken } from '@/lib/auth';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -23,6 +24,15 @@ function sanitizeSlug(input: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+    const isAuthenticated = await verifySessionToken(token);
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized. Please sign in via the admin portal.' },
+        { status: 401 },
+      );
+    }
+
     const body = await request.json();
     const {
       title,

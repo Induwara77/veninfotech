@@ -181,7 +181,7 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
                     <span className="relative inline-flex size-2 rounded-full bg-[#1365A4]" />
                   </span>
                   <h2 className="text-xs font-bold uppercase tracking-wider text-white">
-                    Latest News
+                    {total === 1 ? 'Latest Story' : 'Latest Stories'}
                   </h2>
                 </div>
               </div>
@@ -209,8 +209,8 @@ export default function HeroBannerClient({ items }: HeroBannerClientProps) {
                           : 'bg-white/[0.03] hover:bg-white/[0.07] hover:translate-x-0.5 border-l-4 border-l-transparent'
                       }`}
                     >
-                      {/* Active Progress Bar (Fills continuously over 5s duration) */}
-                      {isActive && (
+                      {/* Active Progress Bar (Fills continuously when total > 1) */}
+                      {isActive && total > 1 && (
                         <div
                           key={`prog-${progressKey}`}
                           className="absolute bottom-0 left-0 h-[2.5px] bg-[#1365A4]"

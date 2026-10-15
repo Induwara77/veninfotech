@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 const COLUMNS = [
-  { title: 'Game Portal', links: ['News', 'Reviews', 'Releases', 'Forum'] },
-  { title: 'About games', links: ['Latest news', 'Upcoming games', 'Game of the year', 'Genres'] },
-  { title: 'Learn more', links: ['Support', 'Contact us', 'Customer service', 'Advertise'] },
+  { title: 'Publication', links: ['Technology', 'Science', 'Economy', 'Culture'] },
+  { title: 'Categories', links: ['World', 'Travel', 'AI & Software', 'Reviews'] },
+  { title: 'Learn more', links: ['About', 'Editorial Policy', 'Press', 'Contact'] },
 ];
 
 export default function Footer() {
@@ -16,7 +16,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-xs">
               {col.links.map((l) => (
                 <li key={l}>
-                  <Link href="#" className="transition-colors hover:text-brand">{l}</Link>
+                  <Link href={`/category/${l.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="transition-colors hover:text-brand">{l}</Link>
                 </li>
               ))}
             </ul>
@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
 
       <p className="border-t border-white/10 py-4 text-center text-[11px] text-neutral-600">
-        © Game Portal. All rights reserved.
+        © VIT. All rights reserved.
       </p>
     </footer>
   );
