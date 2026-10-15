@@ -16,6 +16,25 @@ async function migrate() {
     `;
     console.log('✓ Created/verified post_views table');
 
+    // Create posts table for dynamic blogs & articles
+    await sql`
+      CREATE TABLE IF NOT EXISTS posts (
+        id SERIAL PRIMARY KEY,
+        slug VARCHAR(255) UNIQUE NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        excerpt TEXT NOT NULL DEFAULT '',
+        content TEXT NOT NULL DEFAULT '',
+        category VARCHAR(100) NOT NULL DEFAULT 'TECH',
+        image VARCHAR(1000) NOT NULL DEFAULT '',
+        status VARCHAR(20) NOT NULL DEFAULT 'published',
+        author VARCHAR(100) NOT NULL DEFAULT 'Editorial Team',
+        views INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    console.log('✓ Created/verified posts table');
+
     // Create newsletter_subscribers table for monetization / audience capture
     await sql`
       CREATE TABLE IF NOT EXISTS newsletter_subscribers (

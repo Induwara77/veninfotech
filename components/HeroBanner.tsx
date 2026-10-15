@@ -62,21 +62,27 @@ const DEFAULT_HERO_ITEMS: HeroItem[] = [
 export default async function HeroBanner() {
   const posts = await getLatestPosts(5);
 
-  const items: HeroItem[] = DEFAULT_HERO_ITEMS.map((item, index) => {
-    const post = posts[index];
-    if (!post) return item;
-
-    return {
-      id: post.slug || item.id,
-      badge: 'HOT NOW',
-      category: post.category?.toUpperCase() || item.category,
-      date: post.date || item.date,
-      title: post.title || item.title,
-      excerpt: post.excerpt || item.excerpt,
-      image: post.image || item.image,
+  if (posts && posts.length > 0) {
+    const items: HeroItem[] = posts.map((post, index) => ({
+      id: String(post.id ?? post.slug ?? `post-${index}`),
+      badge: 'LATEST BLOG',
+      category: (post.category || 'BLOG').toUpperCase(),
+      date: post.date,
+      title: post.title,
+      excerpt: post.excerpt,
+      image: post.image || '/images/hero/hero-bg.jpg',
       href: `/posts/${post.slug}`,
-    };
-  });
+    }));
 
-  return <HeroBannerClient items={items} />;
+    // If there are fewer than 5 posts, pad with default items so carousel has full depth
+    if (items.length < 5) {
+      const remaining = DEFAULT_HERO_ITEMS.slice(items.length);
+      return <HeroBannerClient items={[...items, ...remaining]} />;
+    }
+
+    return <HeroBannerClient items={items} />;
+  }
+
+  // Graceful fallback to curated showcase
+  return <HeroBannerClient items={DEFAULT_HERO_ITEMS} />;
 }

@@ -20,6 +20,8 @@ import {
   getTopReviewers,
 } from '@/lib/cms';
 
+import { redirect } from 'next/navigation';
+
 export const instant = false; // Allows dynamic database queries on the homepage
 
 /*
@@ -43,7 +45,15 @@ async function ForumLoader() {
   return <ForumSection threads={await getForumThreads()} />;
 }
 
-export default function HomePage(props: PageProps<'/'>) {
+interface HomePageProps {
+  searchParams?: Promise<{ category?: string; search?: string }>;
+}
+
+export default async function HomePage(props: HomePageProps) {
+  const searchParams = await props.searchParams;
+  if (searchParams?.category) {
+    redirect(`/category/${encodeURIComponent(searchParams.category.toLowerCase())}`);
+  }
   return (
     <>
       <Navbar />

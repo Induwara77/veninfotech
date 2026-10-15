@@ -11,13 +11,13 @@ interface NavItem {
 }
 
 const CATEGORY_ITEMS: NavItem[] = [
-  { id: 'culture', label: 'Culture', href: '/?category=culture' },
-  { id: 'economy', label: 'Economy', href: '/?category=economy' },
-  { id: 'politics', label: 'Politics', href: '/?category=politics' },
-  { id: 'science', label: 'Science', href: '/?category=science' },
-  { id: 'technology', label: 'Technology', href: '/?category=technology' },
-  { id: 'travel', label: 'Travel', href: '/?category=travel' },
-  { id: 'world', label: 'World', href: '/?category=world' },
+  { id: 'culture', label: 'Culture', href: '/category/culture' },
+  { id: 'economy', label: 'Economy', href: '/category/economy' },
+  { id: 'politics', label: 'Politics', href: '/category/politics' },
+  { id: 'science', label: 'Science', href: '/category/science' },
+  { id: 'technology', label: 'Technology', href: '/category/technology' },
+  { id: 'travel', label: 'Travel', href: '/category/travel' },
+  { id: 'world', label: 'World', href: '/category/world' },
 ];
 
 const SECONDARY_ITEMS: NavItem[] = [
@@ -43,12 +43,19 @@ export default function Navbar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const langDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Sync active category with URL search params on mount & navigation
+  // Sync active category with URL pathname and search params on mount & navigation
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const cat = params.get('category');
-      setActiveCategory(cat ? cat.toLowerCase() : null);
+      let cat: string | null = null;
+      if (pathname.startsWith('/category/')) {
+        cat = pathname.replace('/category/', '').split('/')[0];
+      } else {
+        const params = new URLSearchParams(window.location.search);
+        cat = params.get('category');
+      }
+      queueMicrotask(() => {
+        setActiveCategory(cat ? cat.toLowerCase() : null);
+      });
     }
   }, [pathname]);
 
@@ -266,6 +273,7 @@ export default function Navbar() {
 
         {/* Right Side: Search Icon + Language Selector + Mobile Toggle */}
         <div className="flex items-center gap-3">
+
           {/* Search Icon & Expandable Search Input */}
           <div className="relative flex items-center" ref={searchContainerRef}>
             {isSearchOpen ? (
@@ -507,7 +515,7 @@ export default function Navbar() {
           {/* Mobile Language Selector */}
           <div className="mt-4 flex items-center gap-2 border-t border-neutral-800 pt-3 text-xs text-neutral-400">
             <span>Language:</span>
-            {['EN', 'ES', 'FR', 'DE'].map((lang) => (
+            {['EN'].map((lang) => (
               <button
                 key={lang}
                 onClick={() => setCurrentLang(lang)}
