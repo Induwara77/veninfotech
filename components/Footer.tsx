@@ -16,7 +16,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-xs">
               {col.links.map((l) => (
                 <li key={l}>
-                  <Link href={`/category/${l.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="transition-colors hover:text-brand">{l}</Link>
+                  <Link
+                    href={l === 'About' ? '/about' : `/category/${l.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                    className="transition-colors hover:text-brand"
+                  >
+                    {l}
+                  </Link>
                 </li>
               ))}
             </ul>

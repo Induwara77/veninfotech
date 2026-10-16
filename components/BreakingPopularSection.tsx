@@ -29,7 +29,7 @@ export default function BreakingPopularSection({
   breaking,
   popular,
 }: BreakingPopularSectionProps) {
-  if (!breaking && (!popular || popular.length === 0)) {
+  if (!breaking || !popular || popular.length === 0) {
     return null;
   }
   return (
